@@ -9,7 +9,7 @@
     "content_scripts": [
         {
             "matches": [
-                "*://*.finn.no/*"
+                "*://*.finn.no/realestate/*/ad*"
             ],
             "js": [
                 "paafinn.js"
