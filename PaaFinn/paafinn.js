@@ -1,4 +1,4 @@
-
+document.body.style.border = "5px solid red";
 //#region Helpers
 function generateHrefStringbuilder(streetName,streetAdressNummber,postalcode,lat,long){
     res = "https://www.google.com/maps/place/"
@@ -15,6 +15,11 @@ function getElementByXpath(path) {
 }
 //#endregion
 
+function getHousingType() {
+    const pathname = window.location.pathname;
+    const pathnameRegex = /(?<=\/)[^\/]*(?=\/)/g; // Matches anything encapsulated by two "/", that is not itself a "/"
+    return pathname.match(pathnameRegex)[1];
+}
 
 //#region Adress 
 ////Using regular expression to parse the address
@@ -29,11 +34,11 @@ const postalcode = adressUnparsed.match(numbersRegex)[1]
 console.log("Gatenavn: "+streetName+"   Gatenummer: "+streetAdressNummber+"  Postnummer: "+postalcode)
 //#endregion
 
-
 //#region Lat Long
 // Using regular expression to get the lat long coordinates
 const latlongReg = /\d+[.]+\d+/g;  
-const imageSrc = getElementByXpath("/html/body/main/div/div[4]/div[1]/div/section[5]/div/a/img").src;
+const sectionNumber = getHousingType() === "lettings" ? 4 : 5;
+const imageSrc = getElementByXpath(`/html/body/main/div/div[4]/div[1]/div/section[${sectionNumber}]/div/a/img`).src;
 console.log(imageSrc)
 const latlong = imageSrc.match(latlongReg)
 const lat  = latlong[0]
@@ -41,7 +46,6 @@ const long = latlong[1]
 
 console.log("Latetude: "+lat+" Longetude: "+long);
 //#endregion
-
 
 //#region Adding Button
 ////Creating a button and adding the nessesary attributes
