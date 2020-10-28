@@ -1,4 +1,3 @@
-document.body.style.border = "5px solid red";
 //#region Helpers
 function generateHrefStringbuilder(streetName,streetAdressNummber,postalcode,lat,long){
     res = "https://www.google.com/maps/place/"
@@ -25,13 +24,15 @@ function getHousingType() {
 ////Using regular expression to parse the address
 const adressUnparsed = getElementByXpath("/html/body/main/div/div[4]/div[1]/div/section[1]/p").firstChild.textContent;
 const adressReg = /^\D+/g
-const numbersRegex = /\d+/g
+const streetNumberRegex = /\d+\D?(?=,)/g;
+const postalCodeRegex = /(?<=, )\d{4}/g;
+console.log(adressUnparsed)
 
 const streetName = adressUnparsed.match(adressReg)
-const streetAdressNummber = adressUnparsed.match(numbersRegex)[0]
-const postalcode = adressUnparsed.match(numbersRegex)[1]
+const streetAdressNummber = adressUnparsed.match(streetNumberRegex) ? adressUnparsed.match(streetNumberRegex)[0] : ""; // Vet det er stygt, skal fikse senere
+const postalcode = adressUnparsed.match(postalCodeRegex)[0];
 
-console.log("Gatenavn: "+streetName+"   Gatenummer: "+streetAdressNummber+"  Postnummer: "+postalcode)
+console.log("Gatenavn: " + streetName + ", Gatenummer: " + streetAdressNummber + ", Postnummer: " + postalcode)
 //#endregion
 
 //#region Lat Long
