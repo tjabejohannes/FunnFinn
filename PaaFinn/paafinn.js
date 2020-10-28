@@ -1,3 +1,16 @@
+const address = createAddressObject();
+const button = createButton();
+const buttonContainer = getElementByXpath("/html/body/main/div/div[4]/div[1]/div/div[1]/div/div");
+
+buttonContainer.appendChild(button);
+
+// Debugging
+console.log("Gatenavn: " + address.streetName + ", Gatenummer: " + address.streetNumber + ", Postnummer: " + address.postalCode)
+console.log("Latetude: "+ address.lat+" Longetude: "+address.lon);
+console.log(buttonContainer)
+
+// UTIL FUNCTIONS //
+
 //#region Helpers
 function generateHrefStringbuilder(streetName,streetAdressNummber,postalcode,lat,long){
     res = "https://www.google.com/maps/place/"
@@ -20,52 +33,45 @@ function getHousingType() {
     return pathname.match(pathnameRegex)[1];
 }
 
-//#region Adress 
-////Using regular expression to parse the address
-const adressUnparsed = getElementByXpath("/html/body/main/div/div[4]/div[1]/div/section[1]/p").firstChild.textContent;
-const adressReg = /^\D+/g
-const streetNumberRegex = /\d+\D?(?=,)/g;
-const postalCodeRegex = /(?<=, )\d{4}/g;
-console.log(adressUnparsed)
-
-const streetName = adressUnparsed.match(adressReg)
-const streetAdressNummber = adressUnparsed.match(streetNumberRegex) ? adressUnparsed.match(streetNumberRegex)[0] : ""; // Vet det er stygt, skal fikse senere
-const postalcode = adressUnparsed.match(postalCodeRegex)[0];
-
-console.log("Gatenavn: " + streetName + ", Gatenummer: " + streetAdressNummber + ", Postnummer: " + postalcode)
-//#endregion
-
-//#region Lat Long
-// Using regular expression to get the lat long coordinates
-const latlongReg = /\d+[.]+\d+/g;  
-const sectionNumber = getHousingType() === "lettings" ? 4 : 5;
-const imageSrc = getElementByXpath(`/html/body/main/div/div[4]/div[1]/div/section[${sectionNumber}]/div/a/img`).src;
-console.log(imageSrc)
-const latlong = imageSrc.match(latlongReg)
-const lat  = latlong[0]
-const long = latlong[1]
-
-console.log("Latetude: "+lat+" Longetude: "+long);
-//#endregion
-
-//#region Adding Button
-////Creating a button and adding the nessesary attributes
-const button = document.createElement('a');
-button.className = "button button--has-icon button--pill icon icon--twitter"
-button.title = "Go to google maps"
-console.log(generateHrefStringbuilder(streetName,streetAdressNummber,postalcode,lat,long))
-button.href = generateHrefStringbuilder(streetName,streetAdressNummber,postalcode,lat,long)
-
-//  inserting it into the DOM
-const buttonContainer = getElementByXpath("/html/body/main/div/div[4]/div[1]/div/div[1]/div/div");
-buttonContainer.appendChild(button);
-
-console.log(buttonContainer)
-//#endregion
+function createButton() {
+    const button = document.createElement('a');
+    button.className = "button button--has-icon button--pill icon icon--twitter";
+    button.title = "Åpne i Google Maps";
+    console.log(generateHrefStringbuilder(address.streetName, address.streetNumber, address.postalCode, address.lat,address.lon));
+    button.href = generateHrefStringbuilder(address.streetName, address.streetNumber, address.postalCode, address.lat,address.long);
+    button.target = "_blank";
+    button.rel = "noopener noreferrer";
+    return button;
+}
 
 
-// DEBUG border:
-//document.body.style.border = "5px solid red";
+function createAddressObject() {
+    const adressUnparsed = getElementByXpath("/html/body/main/div/div[4]/div[1]/div/section[1]/p").firstChild.textContent;
+    const adressReg = /^\D+/g
+    const streetNumberRegex = /\d+\D?(?=,)/g;
+    const postalCodeRegex = /(?<=, )\d{4}/g;
+    console.log(adressUnparsed)
 
+    const streetName = adressUnparsed.match(adressReg)
+    const streetAdressNummber = adressUnparsed.match(streetNumberRegex) ? adressUnparsed.match(streetNumberRegex)[0] : ""; // Vet det er stygt, skal fikse senere
+    const postalcode = adressUnparsed.match(postalCodeRegex)[0];
 
+    //#region Lat Long
+    // Using regular expression to get the lat long coordinates
+    const latlongReg = /\d+[.]+\d+/g;  
+    const sectionNumber = getHousingType() === "lettings" ? 4 : 5;
+    const imageSrc = getElementByXpath(`/html/body/main/div/div[4]/div[1]/div/section[${sectionNumber}]/div/a/img`).src;
+    console.log(imageSrc)
+    const latlong = imageSrc.match(latlongReg)
+    const lat  = latlong[0]
+    const lon = latlong[1]
+    
+    return {
+        "streetName": streetName,
+        "streetNumber": streetAdressNummber,
+        "postalCode": postalcode,
+        "lat": lat,
+        "lon": lon
+    }
+}
 
