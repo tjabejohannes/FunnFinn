@@ -1,5 +1,5 @@
 const address = createAddressObject();
-const button = createButton();
+const button = createIconButton(address);
 const buttonContainer = getElementByXpath("/html/body/main/div/div[4]/div[1]/div/div[1]/div/div");
 
 buttonContainer.appendChild(button);
@@ -33,14 +33,21 @@ function getHousingType() {
     return pathname.match(pathnameRegex)[1];
 }
 
-function createButton() {
+function createIconButton(address) {
+    const iconLink = browser.runtime.getURL("images/MapsGoogle.png/")
+    
+    const icon = document.createElement('img')
+    icon.src = iconLink  
+    icon.width = 24;
+
     const button = document.createElement('a');
-    button.className = "button button--has-icon button--pill icon icon--twitter";
+    button.className = "button button--pill"
     button.title = "Åpne i Google Maps";
-    console.log(generateHrefStringbuilder(address.streetName, address.streetNumber, address.postalCode, address.lat,address.lon));
     button.href = generateHrefStringbuilder(address.streetName, address.streetNumber, address.postalCode, address.lat,address.long);
     button.target = "_blank";
     button.rel = "noopener noreferrer";
+    
+    button.appendChild(icon)
     return button;
 }
 
@@ -56,7 +63,6 @@ function createAddressObject() {
     const streetAdressNummber = adressUnparsed.match(streetNumberRegex) ? adressUnparsed.match(streetNumberRegex)[0] : ""; // Vet det er stygt, skal fikse senere
     const postalcode = adressUnparsed.match(postalCodeRegex)[0];
 
-    //#region Lat Long
     // Using regular expression to get the lat long coordinates
     const latlongReg = /\d+[.]+\d+/g;  
     const sectionNumber = getHousingType() === "lettings" ? 4 : 5;
