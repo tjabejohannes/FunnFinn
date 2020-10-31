@@ -1,5 +1,6 @@
 const addressString = getElementByXpath("/html/body/main/div/div[4]/div[1]/div/section[1]/p").firstChild.textContent;
 const destinationAddressString = "Oslo sentralstasjon, 0154 oslo";
+const showDirections = false;
 
 const address = createAddressObjectWithLatLon(addressString);
 const destinationAddress = createAddressObject(destinationAddressString);
@@ -87,6 +88,7 @@ function createIconButton(address, destinationAddress) {
     button.title = "Åpne i Google Maps";
     //button.href = generateHrefStringbuilder(address.streetName, address.streetNumber, address.postalCode, address.lat,address.long);
     button.href = generateHrefDirections(address, destinationAddress);
+    button.href = showDirections ? generateHrefDirections(address, destinationAddress) : generateHrefStringbuilder(address);
     button.target = "_blank"; // Open in new tab
     button.rel = "noopener noreferrer";
     
