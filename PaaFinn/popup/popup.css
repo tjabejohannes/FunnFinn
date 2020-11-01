@@ -1,0 +1,15 @@
+html,
+body {
+  width: 400px;
+}
+
+.popup-container {
+  display: flex; /* or inline-flex */
+  flex-direction: column;
+  padding:10px;
+}
+
+.alert{
+  margin-top: 10px;
+  margin-bottom: 0px;
+}

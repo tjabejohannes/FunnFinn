@@ -3,12 +3,21 @@
     "name": "PaaFinn",
     "version": "1.0",
     "description": "Adds func to finn.",
+    "homepage_url": "https://github.com/tjabejohannes/FunnFinn",
     "icons": {
         "48": "icons/funnfinn.png"
     },
     "web_accessible_resources": [
         "images/MapsGoogle.png"
     ],
+    "permissions": [
+        "activeTab"
+    ],
+    "browser_action": {
+        "default_icon": "icons/funnfinn.png",
+        "default_title": "Funn Finn",
+        "default_popup": "popup/popup.html"
+    },
     "content_scripts": [
         {
             "matches": [
