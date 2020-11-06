@@ -27,5 +27,8 @@
                 "paafinn.js"
             ]
         }
-    ]
+    ],
+    "background": {
+        "scripts": ["background.js"]
+    }
 }
