@@ -9,7 +9,7 @@ browser.storage.local.get("destination").then((data) => {
     insertButtonToPage(button);
 });
 
-browser.storage.onChanged.addListener((changes, area) => {
+browser.storage.onChanged.addListener((changes) => {
     newAddress = createAddressObject(changes.destination.newValue);
     document.getElementById("google-maps-button").href = generateHrefDirections(address, newAddress);
 
@@ -78,7 +78,7 @@ function generateHrefDirections(address, destinationAddress) {
     if ((address.streetName) || (address.streetNumber)) res += ","
     if (address.postalCode) res += "+" + address.postalCode;
     if (address.lat && address.lon) res += "/@" + address.lat + "," + address.lon;
-    
+
     return res;
 }
 

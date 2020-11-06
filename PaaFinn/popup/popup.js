@@ -1,5 +1,4 @@
 function getCurrentDestination() {
-  const currentDestination = localStorage.getItem("destination");
   browser.storage.local.get("destination").then((data) => {
     document.getElementById("destination-input").value = data.destination;
 
