@@ -6,8 +6,7 @@ const address = createAddressObjectWithLatLon(addressString);
 browser.storage.local.get("destination").then((data) => {
     const destinationAddress = createAddressObject(data.destination);
     const button = createIconButton(address, destinationAddress);
-    const buttonContainer = getElementByXpath("/html/body/main/div/div[4]/div[1]/div/div[1]/div/div");
-    buttonContainer.appendChild(button);
+    insertButtonToPage(button);
 });
 
 // Debugging
@@ -87,7 +86,6 @@ function createIconButton(address, destinationAddress) {
     const button = document.createElement('a');
     button.className = "button button--pill"
     button.title = "Åpne i Google Maps";
-    //button.href = generateHrefStringbuilder(address.streetName, address.streetNumber, address.postalCode, address.lat,address.long);
     button.href = generateHrefDirections(address, destinationAddress);
     button.href = showDirections ? generateHrefDirections(address, destinationAddress) : generateHrefStringbuilder(address);
     button.target = "_blank"; // Open in new tab
@@ -95,6 +93,11 @@ function createIconButton(address, destinationAddress) {
     
     button.appendChild(icon)
     return button;
+}
+
+function insertButtonToPage(button) {
+    const buttonContainer = getElementByXpath("/html/body/main/div/div[4]/div[1]/div/div[1]/div/div");
+    buttonContainer.appendChild(button);
 }
 
 function getLatLon() {

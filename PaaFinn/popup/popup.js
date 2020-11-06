@@ -28,15 +28,3 @@ getCurrentDestination();
 listenForClicks();
 
 console.log("Popup script loaded!");
-
-function sendData() {
-  browser.tabs.query({
-    currentWindow: true,
-    active: true
-  }).then(sendMessage)
-}
-
-function sendMessage(tabs) {
-  browser.tabs.sendMessage(tabs[0].id, {"hei": "hå"});
-
-}
