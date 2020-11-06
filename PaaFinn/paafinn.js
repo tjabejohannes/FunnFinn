@@ -9,6 +9,12 @@ browser.storage.local.get("destination").then((data) => {
     insertButtonToPage(button);
 });
 
+browser.storage.onChanged.addListener((changes, area) => {
+    newAddress = createAddressObject(changes.destination.newValue);
+    document.getElementById("google-maps-button").href = generateHrefDirections(address, newAddress);
+
+});
+
 // Debugging
 console.log("Gatenavn: " + address.streetName + ", Gatenummer: " + address.streetNumber + ", Postnummer: " + address.postalCode)
 console.log("Gatenavn: " + destinationAddress.streetName + ", Gatenummer: " + destinationAddress.streetNumber + ", Postnummer: " + destinationAddress.postalCode)
@@ -72,7 +78,7 @@ function generateHrefDirections(address, destinationAddress) {
     if ((address.streetName) || (address.streetNumber)) res += ","
     if (address.postalCode) res += "+" + address.postalCode;
     if (address.lat && address.lon) res += "/@" + address.lat + "," + address.lon;
-
+    
     return res;
 }
 
@@ -90,6 +96,7 @@ function createIconButton(address, destinationAddress) {
     button.href = showDirections ? generateHrefDirections(address, destinationAddress) : generateHrefStringbuilder(address);
     button.target = "_blank"; // Open in new tab
     button.rel = "noopener noreferrer";
+    button.id = "google-maps-button";
     
     button.appendChild(icon)
     return button;
