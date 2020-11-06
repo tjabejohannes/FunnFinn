@@ -1,21 +1,14 @@
 const addressString = getElementByXpath("/html/body/main/div/div[4]/div[1]/div/section[1]/p").firstChild.textContent;
 const destinationAddressString = "Oslo sentralstasjon, 0154 oslo";
 const showDirections = true;
-
 const address = createAddressObjectWithLatLon(addressString);
 
-browser.runtime.sendMessage({"hei": "hå"}).then((response) => {
-    const destinationAddress = createAddressObject(response.destination);
+browser.storage.local.get("destination").then((data) => {
+    const destinationAddress = createAddressObject(data.destination);
     const button = createIconButton(address, destinationAddress);
     const buttonContainer = getElementByXpath("/html/body/main/div/div[4]/div[1]/div/div[1]/div/div");
     buttonContainer.appendChild(button);
 });
-
-/*
-browser.runtime.onMessage.addListener((message) => {
-    console.log("melding mottatt");
-  })
-*/
 
 // Debugging
 console.log("Gatenavn: " + address.streetName + ", Gatenummer: " + address.streetNumber + ", Postnummer: " + address.postalCode)

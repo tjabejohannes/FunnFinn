@@ -11,7 +11,7 @@ function listenForClicks() {
 
 function setDestination() {
   const destination = document.getElementById("destination-input").value;
-  localStorage.setItem("destination", destination);
+  browser.storage.local.set({"destination": destination});
   showSuccessAlert("New destination saved!");
 }
 
@@ -40,5 +40,3 @@ function sendMessage(tabs) {
   browser.tabs.sendMessage(tabs[0].id, {"hei": "hå"});
 
 }
-
-
