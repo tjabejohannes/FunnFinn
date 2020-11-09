@@ -3,16 +3,16 @@ const destinationAddressString = "Oslo sentralstasjon, 0154 oslo";
 const showDirections = true;
 const address = createAddressObjectWithLatLon(addressString);
 
+// Get stored destination and finish building button
 browser.storage.local.get("destination").then((data) => {
-    const destinationAddress = createAddressObject(data.destination);
+    const destinationAddress = data.destination ? createAddressObject(data.destination) : undefined;
     const button = createIconButton(address, destinationAddress);
     insertButtonToPage(button);
 });
 
+// When destination address changes
 browser.storage.onChanged.addListener((changes) => {
-    newAddress = createAddressObject(changes.destination.newValue);
-    document.getElementById("google-maps-button").href = generateHrefDirections(address, newAddress);
-
+    updateButton(changes);
 });
 
 // Debugging
@@ -92,8 +92,7 @@ function createIconButton(address, destinationAddress) {
     const button = document.createElement('a');
     button.className = "button button--pill"
     button.title = "Åpne i Google Maps";
-    button.href = generateHrefDirections(address, destinationAddress);
-    button.href = showDirections ? generateHrefDirections(address, destinationAddress) : generateHrefStringbuilder(address);
+    button.href = showDirections && destinationAddress !== "" ? generateHrefDirections(address, destinationAddress) : generateHrefStringbuilder(address);
     button.target = "_blank"; // Open in new tab
     button.rel = "noopener noreferrer";
     button.id = "google-maps-button";
@@ -105,6 +104,18 @@ function createIconButton(address, destinationAddress) {
 function insertButtonToPage(button) {
     const buttonContainer = getElementByXpath("/html/body/main/div/div[4]/div[1]/div/div[1]/div/div");
     buttonContainer.appendChild(button);
+}
+
+function updateButton(changes) {
+    const button = document.getElementById("google-maps-button");
+    const newAddress = changes.destination.newValue;
+
+    if(newAddress) {
+        const newAddressObject = createAddressObject(changes.destination.newValue);
+        button.href = generateHrefDirections(address, newAddressObject);
+    } else {
+        button.href = generateHrefStringbuilder(address);
+    }
 }
 
 function getLatLon() {

@@ -12,7 +12,7 @@ function listenForClicks() {
 }
 
 function setDestination() {
-  const destination = document.getElementById("destination-input").value;
+  const destination = document.getElementById("destination-input").value.trim();
   browser.storage.local.set({"destination": destination});
   showSuccessAlert("New destination saved!");
 }
