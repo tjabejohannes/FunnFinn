@@ -38,7 +38,7 @@ function createAddressObjectWithLatLon(addressString) {
 
 function createAddressObject(addressString) {
     const adressReg = /^\D+/
-    const streetNumberRegex = /\d+\D?(?=,)/;
+    const streetNumberRegex = /(?<=\S\s+)\d+\D?/;
     const postalCodeRegex = /(?<=, )\d{4}/;
     console.log(addressString)
 
