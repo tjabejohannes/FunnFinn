@@ -40,14 +40,10 @@ function createAddressObject(addressString) {
     const adressReg = /^\D+/
     const streetNumberRegex = /(?<=\S\s+)\d+\D?/;
     const postalCodeRegex = /(?<=, )\d{4}/;
-    console.log(addressString)
 
     const streetName = addressString.match(adressReg)
     const streetAdressNummber = addressString.match(streetNumberRegex) ? addressString.match(streetNumberRegex) : ""; // Vet det er stygt, skal fikse senere
     const postalcode = addressString.match(postalCodeRegex) ? addressString.match(postalCodeRegex) : "";
-    console.log("streetname: " + streetName)
-    console.log("address number: " + streetAdressNummber)
-    console.log("postalcode: " + postalcode)
     return {
         "streetName": streetName,
         "streetNumber": streetAdressNummber,
@@ -125,7 +121,6 @@ function getLatLon() {
     const latlongReg = /\d+[.]+\d+/g;  
     const sectionNumber = getHousingType() === "lettings" ? 4 : 5;
     const imageSrc = getElementByXpath(`/html/body/main/div/div[4]/div[1]/div/section[${sectionNumber}]/div/a/img`).src;
-    console.log(imageSrc)
     const latlong = imageSrc.match(latlongReg)
     return latlong;
 }
