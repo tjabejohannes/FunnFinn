@@ -37,15 +37,17 @@ function createAddressObjectWithLatLon(addressString) {
 }
 
 function createAddressObject(addressString) {
-    const adressReg = /^\D+/g
-    const streetNumberRegex = /\d+\D?(?=,)/g;
-    const postalCodeRegex = /(?<=, )\d{4}/g;
+    const adressReg = /^\D+/
+    const streetNumberRegex = /\d+\D?(?=,)/;
+    const postalCodeRegex = /(?<=, )\d{4}/;
     console.log(addressString)
 
     const streetName = addressString.match(adressReg)
-    const streetAdressNummber = addressString.match(streetNumberRegex) ? addressString.match(streetNumberRegex)[0] : ""; // Vet det er stygt, skal fikse senere
-    const postalcode = addressString.match(postalCodeRegex)[0];
-    
+    const streetAdressNummber = addressString.match(streetNumberRegex) ? addressString.match(streetNumberRegex) : ""; // Vet det er stygt, skal fikse senere
+    const postalcode = addressString.match(postalCodeRegex) ? addressString.match(postalCodeRegex) : "";
+    console.log("streetname: " + streetName)
+    console.log("address number: " + streetAdressNummber)
+    console.log("postalcode: " + postalcode)
     return {
         "streetName": streetName,
         "streetNumber": streetAdressNummber,
@@ -54,7 +56,7 @@ function createAddressObject(addressString) {
 }
 
 function generateHrefStringbuilder(address){
-    res = "https://www.google.com/maps/place/";
+    let res = "https://www.google.com/maps/place/";
 
     if (address.streetName) res += address.streetName;
     if (address.streetNumber) res += "+" + address.streetNumber;
@@ -66,12 +68,13 @@ function generateHrefStringbuilder(address){
 }
 
 function generateHrefDirections(address, destinationAddress) {
-    res = "https://www.google.com/maps/dir/";
+    let res = "https://www.google.com/maps/dir/";
 
     if (destinationAddress.streetName) res += destinationAddress.streetName;
     if (destinationAddress.streetNumber) res += "+" + destinationAddress.streetNumber;
     if ((destinationAddress.streetName) || (destinationAddress.streetNumber)) res += ",";
-    if (destinationAddress.postalCode) res += "+" + destinationAddress.postalCode + "/";
+    if (destinationAddress.postalCode) res += "+" + destinationAddress.postalCode;
+    res += "/";
 
     if (address.streetName) res += address.streetName;
     if (address.streetNumber) res += "+" + address.streetNumber;
@@ -92,7 +95,7 @@ function createIconButton(address, destinationAddress) {
     const button = document.createElement('a');
     button.className = "button button--pill"
     button.title = "Åpne i Google Maps";
-    button.href = showDirections && destinationAddress !== "" ? generateHrefDirections(address, destinationAddress) : generateHrefStringbuilder(address);
+    button.href = showDirections && destinationAddress ? generateHrefDirections(address, destinationAddress) : generateHrefStringbuilder(address);
     button.target = "_blank"; // Open in new tab
     button.rel = "noopener noreferrer";
     button.id = "google-maps-button";

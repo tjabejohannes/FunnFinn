@@ -1,7 +1,6 @@
 function getCurrentDestination() {
   browser.storage.local.get("destination").then((data) => {
-    document.getElementById("destination-input").value = data.destination;
-
+    document.getElementById("destination-input").value = data.destination ? data.destination : "";
   });
 }
 
