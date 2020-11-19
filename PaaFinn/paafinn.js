@@ -1,5 +1,3 @@
-const showDirections = true;
-
 const addressString = getAddressString();
 const address = createAddressObject(addressString);
 
@@ -18,7 +16,7 @@ browser.storage.onChanged.addListener((changes) => {
 // Debugging
 console.log("Gatenavn: " + address.streetName + ", Gatenummer: " + address.streetNumber + ", Postnummer: " + address.postalCode)
 console.log("Gatenavn: " + destinationAddress.streetName + ", Gatenummer: " + destinationAddress.streetNumber + ", Postnummer: " + destinationAddress.postalCode)
-console.log("Latetude: "+ address.lat+" Longetude: "+address.lon);
+console.log("Latetude: " + address.lat + " Longetude: " + address.lon);
 console.log(buttonContainer)
 
 // UTIL FUNCTIONS //
@@ -47,39 +45,28 @@ function createAddressObject(addressString) {
     }
 }
 
-function generateHrefStringbuilder(address){
-    let res = "https://www.google.com/maps/place/";
+function generateHrefStringbuilder(address) {
+    return `https://www.google.com/maps/place/${formatAddressHref(address)}`;
+}
 
+function generateHrefDirections(address, destinationAddress) {
+    return `https://www.google.com/maps/dir/${formatAddressHref(address)}/${formatAddressHref(destinationAddress)}`;
+}
+
+function formatAddressHref(address) {
+    let res = "";
     if (address.streetName) res += address.streetName;
     if (address.streetNumber) res += "+" + address.streetNumber;
     if ((address.streetName) || (address.streetNumber)) res += ",";
     if (address.postalCode) res += "+" + address.postalCode;
-
-    return res;
-}
-
-function generateHrefDirections(address, destinationAddress) {
-    let res = "https://www.google.com/maps/dir/";
-
-    if (destinationAddress.streetName) res += destinationAddress.streetName;
-    if (destinationAddress.streetNumber) res += "+" + destinationAddress.streetNumber;
-    if ((destinationAddress.streetName) || (destinationAddress.streetNumber)) res += ",";
-    if (destinationAddress.postalCode) res += "+" + destinationAddress.postalCode;
-    res += "/";
-
-    if (address.streetName) res += address.streetName;
-    if (address.streetNumber) res += "+" + address.streetNumber;
-    if ((address.streetName) || (address.streetNumber)) res += ","
-    if (address.postalCode) res += "+" + address.postalCode;
-
     return res;
 }
 
 function createIconButton(address, destinationAddress) {
     const iconLink = browser.runtime.getURL("images/MapsGoogle.png/")
-    
+
     const icon = document.createElement('img')
-    icon.src = iconLink  
+    icon.src = iconLink
     icon.width = 24;
 
     const button = document.createElement('a');
@@ -89,7 +76,7 @@ function createIconButton(address, destinationAddress) {
     button.target = "_blank"; // Open in new tab
     button.rel = "noopener noreferrer";
     button.id = "google-maps-button";
-    
+
     button.appendChild(icon)
     return button;
 }
@@ -106,7 +93,7 @@ function updateButton(changes) {
     const button = document.getElementById("google-maps-button");
     const newAddress = changes.destination.newValue;
 
-    if(newAddress) {
+    if (newAddress) {
         const newAddressObject = createAddressObject(changes.destination.newValue);
         button.href = generateHrefDirections(address, newAddressObject);
     } else {
