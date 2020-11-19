@@ -22,14 +22,11 @@
     "content_scripts": [
         {
             "matches": [
-                "*://*.finn.no/realestate/*/ad*"
+                "*://*.finn.no/*/*/ad*"
             ],
             "js": [
                 "paafinn.js"
             ]
         }
-    ],
-    "background": {
-        "scripts": ["background.js"]
-    }
+    ]
 }

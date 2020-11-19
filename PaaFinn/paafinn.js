@@ -1,7 +1,7 @@
-const addressString = getElementByXpath("/html/body/main/div/div[4]/div[1]/div/section[1]/p").firstChild.textContent;
-const destinationAddressString = "Oslo sentralstasjon, 0154 oslo";
 const showDirections = true;
-const address = createAddressObjectWithLatLon(addressString);
+
+const addressString = getAddressString();
+const address = createAddressObject(addressString);
 
 // Get stored destination and finish building button
 browser.storage.local.get("destination").then((data) => {
@@ -23,17 +23,13 @@ console.log(buttonContainer)
 
 // UTIL FUNCTIONS //
 
-function getElementByXpath(path) {
-    return document.evaluate(path, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
+function getAddressString() {
+    // Fetches text over static map image
+    return document.getElementsByClassName("u-mt32")[0].firstElementChild.innerText;
 }
 
-function createAddressObjectWithLatLon(addressString) {
-    const addressObject = createAddressObject(addressString);
-    const latLon = getLatLon();
-    addressObject.lat = latLon[0]
-    addressObject.lon = latLon[1]
-
-    return addressObject;
+function getElementByXpath(path) {
+    return document.evaluate(path, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
 }
 
 function createAddressObject(addressString) {
@@ -58,7 +54,6 @@ function generateHrefStringbuilder(address){
     if (address.streetNumber) res += "+" + address.streetNumber;
     if ((address.streetName) || (address.streetNumber)) res += ",";
     if (address.postalCode) res += "+" + address.postalCode;
-    if (address.lat && address.lon) res += "/@" + address.lat + "," + address.lon;
 
     return res;
 }
@@ -76,7 +71,6 @@ function generateHrefDirections(address, destinationAddress) {
     if (address.streetNumber) res += "+" + address.streetNumber;
     if ((address.streetName) || (address.streetNumber)) res += ","
     if (address.postalCode) res += "+" + address.postalCode;
-    if (address.lat && address.lon) res += "/@" + address.lat + "," + address.lon;
 
     return res;
 }
@@ -101,7 +95,10 @@ function createIconButton(address, destinationAddress) {
 }
 
 function insertButtonToPage(button) {
-    const buttonContainer = getElementByXpath("/html/body/main/div/div[4]/div[1]/div/div[1]/div/div");
+    let buttonContainer = getElementByXpath("/html/body/main/div/div[4]/div[1]/div/div[1]/div/div");
+    if (!buttonContainer) {
+        buttonContainer = getElementByXpath("/html/body/main/div/div[3]/div[1]/article/div[2]");
+    }
     buttonContainer.appendChild(button);
 }
 
@@ -115,18 +112,4 @@ function updateButton(changes) {
     } else {
         button.href = generateHrefStringbuilder(address);
     }
-}
-
-function getLatLon() {
-    const latlongReg = /\d+[.]+\d+/g;  
-    const sectionNumber = getHousingType() === "lettings" ? 4 : 5;
-    const imageSrc = getElementByXpath(`/html/body/main/div/div[4]/div[1]/div/section[${sectionNumber}]/div/a/img`).src;
-    const latlong = imageSrc.match(latlongReg)
-    return latlong;
-}
-
-function getHousingType() {
-    const pathname = window.location.pathname;
-    const pathnameRegex = /(?<=\/)[^\/]*(?=\/)/g; // Matches anything encapsulated by two "/", that is not itself a "/"
-    return pathname.match(pathnameRegex)[1];
 }
