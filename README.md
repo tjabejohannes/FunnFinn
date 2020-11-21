@@ -18,5 +18,7 @@ FunnFinn skal nå være lastet i denne sesjonen. Om man lukker Firefox og åpner
 
 På annonsesider skal en ny knapp <img src="https://github.com/tjabejohannes/FunnFinn/blob/main/PaaFinn/images/MapsGoogle.png" width=27> være lagt inn under bildene, og en FunnFinn-logo <img src="https://github.com/tjabejohannes/FunnFinn/blob/main/PaaFinn/icons/funnfinn.png" width="27"> skal være lagt til til høyre for adressebaren i nettleseren. Trykker du på logoen kan du legge inn en vilkårlig adresse (For eksempel **Oslo Sentralstasjon**, eller **Dalevegen 6, 6153 Ørsta**). Når du da trykker på Maps-knappen inne på annonser vil den åpne Google Maps i en ny fane der raskeste reiserute, med reisetid, er lagt inn.
 
-<img src="https://i.imgur.com/A8Kp3jY.png">
-<img src="https://i.imgur.com/JYSFpga.png">
+![alttext](https://i.imgur.com/A8Kp3jY.png "Knapp til googlemaps")
+
+![alttext](https://i.imgur.com/3Kxqc8Z.png "Popup med destinasjons")
+
