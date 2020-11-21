@@ -72,7 +72,7 @@ function createIconButton(address, destinationAddress) {
     const button = document.createElement('a');
     button.className = "button button--pill"
     button.title = "Åpne i Google Maps";
-    button.href = showDirections && destinationAddress ? generateHrefDirections(address, destinationAddress) : generateHrefStringbuilder(address);
+    button.href = destinationAddress ? generateHrefDirections(address, destinationAddress) : generateHrefStringbuilder(address);
     button.target = "_blank"; // Open in new tab
     button.rel = "noopener noreferrer";
     button.id = "google-maps-button";
