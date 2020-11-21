@@ -11,7 +11,6 @@
         "images/MapsGoogle.png"
     ],
     "permissions": [
-        "activeTab",
         "storage"
     ],
     "browser_action": {

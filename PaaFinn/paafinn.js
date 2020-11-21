@@ -13,11 +13,6 @@ browser.storage.onChanged.addListener((changes) => {
     updateButton(changes);
 });
 
-// Debugging
-console.log("Gatenavn: " + address.streetName + ", Gatenummer: " + address.streetNumber + ", Postnummer: " + address.postalCode)
-console.log("Gatenavn: " + destinationAddress.streetName + ", Gatenummer: " + destinationAddress.streetNumber + ", Postnummer: " + destinationAddress.postalCode)
-console.log("Latetude: " + address.lat + " Longetude: " + address.lon);
-console.log(buttonContainer)
 
 // UTIL FUNCTIONS //
 
