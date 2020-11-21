@@ -81,6 +81,10 @@ function insertButtonToPage(button) {
     if (!buttonContainer) {
         buttonContainer = getElementByXpath("/html/body/main/div/div[3]/div[1]/article/div[2]");
     }
+    if(!buttonContainer){
+        buttonContainer = document.getElementsByClassName("button button--has-icon button--pill icon icon--twitter")[0].parentElement
+        console.log(buttonContainer)
+    }
     buttonContainer.appendChild(button);
 }
 
