@@ -18,7 +18,7 @@ browser.storage.onChanged.addListener((changes) => {
 
 function getAddressString() {
     // Fetches text over static map image
-    return document.getElementsByClassName("u-mt32")[0].firstElementChild.innerText;
+    const addressString = document.querySelector('a[href*="https://kart.finn.no"]').parentElement.previousElementSibling.textContent;
 }
 
 function getElementByXpath(path) {
@@ -58,7 +58,7 @@ function formatAddressHref(address) {
 }
 
 function createIconButton(address, destinationAddress) {
-    const iconLink = browser.runtime.getURL("images/MapsGoogle.png/")
+    const iconLink = browser.runtime.getURL("images/MapsGoogle.png");
 
     const icon = document.createElement('img')
     icon.src = iconLink
@@ -83,7 +83,6 @@ function insertButtonToPage(button) {
     }
     if(!buttonContainer){
         buttonContainer = document.getElementsByClassName("button button--has-icon button--pill icon icon--twitter")[0].parentElement
-        console.log(buttonContainer)
     }
     buttonContainer.appendChild(button);
 }
