@@ -28,15 +28,18 @@ function getElementByXpath(path) {
 function createAddressObject(addressString) {
     const adressReg = /^\D+/
     const streetNumberRegex = /(?<=\S\s+)\d+\D?/;
-    const postalCodeRegex = /(?<=, )\d{4}/;
+    const postalCodeRegex = /\d{4}/;
+    const postalPlaceRegex = /(?<=\d{4}\s)\S+/;
 
     const streetName = addressString.match(adressReg)
     const streetAdressNummber = addressString.match(streetNumberRegex) ? addressString.match(streetNumberRegex) : ""; // Vet det er stygt, skal fikse senere
     const postalcode = addressString.match(postalCodeRegex) ? addressString.match(postalCodeRegex) : "";
+    const postalPlace = addressString.match(postalPlaceRegex) ? addressString.match(postalPlaceRegex) : "";
     return {
         "streetName": streetName,
         "streetNumber": streetAdressNummber,
-        "postalCode": postalcode
+        "postalCode": postalcode,
+        "postalPlace": postalPlace
     }
 }
 
@@ -53,6 +56,7 @@ function formatAddressHref(address) {
     if (address.streetName) res += address.streetName;
     if (address.streetNumber) res += "+" + address.streetNumber;
     if (address.postalCode) res += "+" + address.postalCode;
+    if (address.postalPlace) res += "+" + address.postalPlace;
     return res;
 }
 
