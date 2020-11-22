@@ -1,5 +1,8 @@
 # FunnFinn
-FunnFinn gjør det lettere å finne gode funn på Finn (prøv å si det tre ganger fort), ved å enkelt la deg finne ut hvor lang tid det tar å til en annonses adresse. Utvidelsen legger til en ny knapp på annonser som har lagt til adresse eller stedsnavn som tar deg til Google Maps, som viser reiserute og reisetid fra annonsens adresse til den du har lagt til i popup-menyen. Denne utvidelsen er spesielt nyttig om man for eksempel er på boligjakt og reisetid fra en bolig til for eksempel jobb eller bysentrum er en viktig faktor. Man slipper da å åpne Maps i en ny fane og taste inn adressene for hver bolig.
+FunnFinn gjør det lettere å finne gode funn på Finn (prøv å si det tre ganger fort). Utvidelsen lar deg
+enkelt finne avstanden til en annonses adresse. Med et enkelt klikk viser utvidelsen deg reiseruten din i Google Maps, og du kan selv styre hvilken adresse ruten skal beregnes fra via en pop-up-meny.
+Denne utvidelsen er spesielt nyttig dersom man for eksempel er på boligjakt, og reisetid boligen til for eksempel jobb eller bysentrum er en viktig faktor. Man slipper da å måtte åpne Google Maps i en ny fane og legge inn adressene for hver bolig.
+
 
 
 # Test ut i Firefox
