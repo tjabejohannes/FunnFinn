@@ -18,7 +18,7 @@ browser.storage.onChanged.addListener((changes) => {
 
 function getAddressString() {
     // Fetches text over static map image
-    const addressString = document.querySelector('a[href*="https://kart.finn.no"]').parentElement.previousElementSibling.textContent;
+    return document.querySelector('a[href*="https://kart.finn.no"]').parentElement.previousElementSibling.textContent;
 }
 
 function getElementByXpath(path) {
@@ -52,7 +52,6 @@ function formatAddressHref(address) {
     let res = "";
     if (address.streetName) res += address.streetName;
     if (address.streetNumber) res += "+" + address.streetNumber;
-    if ((address.streetName) || (address.streetNumber)) res += ",";
     if (address.postalCode) res += "+" + address.postalCode;
     return res;
 }
