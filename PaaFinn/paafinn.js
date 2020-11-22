@@ -26,7 +26,7 @@ function getElementByXpath(path) {
 }
 
 function createAddressObject(addressString) {
-    const adressReg = /^\D+/
+    const adressReg = /(?!\d{4})^\S+(?<!,)/
     const streetNumberRegex = /(?<=\S\s+)(?!\d{4})\d+\w?/;
     const postalCodeRegex = /\d{4}/;
     const postalPlaceRegex = /(?<=\d{4}\s)\S+/;
@@ -55,6 +55,7 @@ function formatAddressHref(address) {
     let res = "";
     if (address.streetName) res += address.streetName;
     if (address.streetNumber) res += "+" + address.streetNumber;
+    if (res !== "" && address.postalCode) res += ",";
     if (address.postalCode) res += "+" + address.postalCode;
     if (address.postalPlace) res += "+" + address.postalPlace;
     return res;
