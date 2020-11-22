@@ -27,7 +27,7 @@ function getElementByXpath(path) {
 
 function createAddressObject(addressString) {
     const adressReg = /^\D+/
-    const streetNumberRegex = /(?<=\S\s+)\d+\D?/;
+    const streetNumberRegex = /(?<=\S\s+)(?!\d{4})\d+\w?/;
     const postalCodeRegex = /\d{4}/;
     const postalPlaceRegex = /(?<=\d{4}\s)\S+/;
 
