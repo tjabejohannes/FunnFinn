@@ -72,8 +72,8 @@ function updateButton(changes) {
     const newAddress = changes.destination.newValue;
 
     if (newAddress) {
-        const newAddressObject = createAddressObject(changes.destination.newValue);
-        button.href = generateHrefDirections(address, newAddressObject);
+        const newAddress = parseAddress(changes.destination.newValue);
+        button.href = generateHrefDirections(address, newAddress);
     } else {
         button.href = generateHrefStringbuilder(address);
     }
