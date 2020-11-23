@@ -1,9 +1,9 @@
 const addressString = getAddressString();
-const address = createAddressObject(addressString);
+const address = parseAddress(addressString);
 
 // Get stored destination and finish building button
 browser.storage.local.get("destination").then((data) => {
-    const destinationAddress = data.destination ? createAddressObject(data.destination) : undefined;
+    const destinationAddress = data.destination ? parseAddress(data.destination) : undefined;
     const button = createIconButton(address, destinationAddress);
     insertButtonToPage(button);
 });
@@ -21,44 +21,20 @@ function getAddressString() {
     return document.querySelector('a[href*="https://kart.finn.no"]').parentElement.previousElementSibling.textContent;
 }
 
+function parseAddress(addressString) {
+    return addressString.trim().replace(/\s+/g, "+");
+}
+
 function getElementByXpath(path) {
     return document.evaluate(path, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
 }
 
-function createAddressObject(addressString) {
-    const adressReg = /(?!\d{4})^\S+(?<!,)/
-    const streetNumberRegex = /(?<=\S\s+)(?!\d{4})\d+\w?/;
-    const postalCodeRegex = /\d{4}/;
-    const postalPlaceRegex = /(?<=\d{4}\s)\S+/;
-
-    const streetName = addressString.match(adressReg)
-    const streetAdressNummber = addressString.match(streetNumberRegex) ? addressString.match(streetNumberRegex) : ""; // Vet det er stygt, skal fikse senere
-    const postalcode = addressString.match(postalCodeRegex) ? addressString.match(postalCodeRegex) : "";
-    const postalPlace = addressString.match(postalPlaceRegex) ? addressString.match(postalPlaceRegex) : "";
-    return {
-        "streetName": streetName,
-        "streetNumber": streetAdressNummber,
-        "postalCode": postalcode,
-        "postalPlace": postalPlace
-    }
-}
-
 function generateHrefStringbuilder(address) {
-    return `https://www.google.com/maps/place/${formatAddressHref(address)}`;
+    return `https://www.google.com/maps/place/${address}`;
 }
 
 function generateHrefDirections(address, destinationAddress) {
-    return `https://www.google.com/maps/dir/${formatAddressHref(address)}/${formatAddressHref(destinationAddress)}`;
-}
-
-function formatAddressHref(address) {
-    let res = "";
-    if (address.streetName) res += address.streetName;
-    if (address.streetNumber) res += "+" + address.streetNumber;
-    if (res !== "" && address.postalCode) res += ",";
-    if (address.postalCode) res += "+" + address.postalCode;
-    if (address.postalPlace) res += "+" + address.postalPlace;
-    return res;
+    return `https://www.google.com/maps/dir/${address}/${destinationAddress}`;
 }
 
 function createIconButton(address, destinationAddress) {
