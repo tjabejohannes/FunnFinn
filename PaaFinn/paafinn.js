@@ -1,16 +1,18 @@
 const addressString = getAddressString();
 const address = parseAddress(addressString);
 
+const browser = chrome || browser
 // Get stored destination and finish building button
-browser.storage.local.get("destination").then((data) => {
+browser.storage.local.get("destination", function(data){
     const destinationAddress = data.destination ? parseAddress(data.destination) : undefined;
     const button = createIconButton(address, destinationAddress);
     insertButtonToPage(button);
 });
 
 // When destination address changes
-browser.storage.onChanged.addListener((changes) => {
+browser.storage.onChanged.addListener(function(changes, namespace) {
     updateButton(changes);
+    console.log("change recived!");
 });
 
 
