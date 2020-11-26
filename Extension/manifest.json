@@ -24,7 +24,15 @@
                 "*://*.finn.no/*/*/ad*"
             ],
             "js": [
-                "paafinn.js"
+                "content_scripts/buttonToMaps.js"
+            ]
+        },
+        {
+            "matches": [
+                "*://*.finn.no/realestate/*/search*"
+            ],
+            "js": [
+                "content_scripts/pricePrArea.js"
             ]
         }
     ]
