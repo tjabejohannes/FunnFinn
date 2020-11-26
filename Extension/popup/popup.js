@@ -2,7 +2,6 @@ const browser = chrome || browser
 
 function getCurrentDestination() {
   browser.storage.local.get("destination", function(data){
-    console.log(data)
     document.getElementById("destination-input").value = data.destination ? data.destination : "";
   });
 }
@@ -16,7 +15,6 @@ function listenForClicks() {
 function setDestination() {
   const destination = document.getElementById("destination-input").value.trim();
   browser.storage.local.set({"destination": destination}, function(res) {
-    console.log(res)
     showSuccessAlert("Destinasjon lagret!");
   });
 }
