@@ -12,7 +12,6 @@ browser.storage.local.get("destination", function(data){
 // When destination address changes
 browser.storage.onChanged.addListener(function(changes, namespace) {
     updateButton(changes);
-    console.log("change recived!");
 });
 
 
