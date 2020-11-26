@@ -1,11 +1,16 @@
 # FunnFinn
 FunnFinn gjør det lettere å finne gode funn på Finn (prøv å si det tre ganger fort). Utvidelsen lar deg
 enkelt finne avstanden til en annonses adresse. Med et enkelt klikk viser utvidelsen deg reiseruten din i Google Maps, og du kan selv styre hvilken adresse ruten skal beregnes fra via en pop-up-meny.
-Denne utvidelsen er spesielt nyttig dersom man for eksempel er på boligjakt, og reisetid boligen til for eksempel jobb eller bysentrum er en viktig faktor. Man slipper da å måtte åpne Google Maps i en ny fane og legge inn adressene for hver bolig.
+Denne utvidelsen er spesielt nyttig dersom man for eksempel er på boligjakt, og reisetid fra boligen til for eksempel jobb eller bysentrum er en viktig faktor. Man slipper da å måtte åpne Google Maps i en ny fane og legge inn adressene for hver bolig.
+
+# Installer for Firefox og Chrome
+
+Utvidelsen er tilgjengelig både for [Firefox](https://addons.mozilla.org/nb-NO/firefox/addon/funnfinn/?utm_source=addons.mozilla.org&utm_medium=referral&utm_content=search) og [Chrome](https://chrome.google.com/webstore/detail/funnfinn/bcemakmkcojfaodcjgpgdbcljlhfahjl?hl=no)
 
 
 
 # Test ut i Firefox
+Om du vil teste lokalt kan du gjøre følgende i Firefox:
 
 1. Klon repoet
 ```
