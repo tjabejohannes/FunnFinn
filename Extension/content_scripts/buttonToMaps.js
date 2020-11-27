@@ -39,7 +39,7 @@ function generateHrefDirections(address, destinationAddress) {
 }
 
 function createIconButton(address, destinationAddress) {
-    const iconLink = browser.runtime.getURL("images/MapsGoogle.png");
+    const iconLink = browser.runtime.getURL("web_accessible_resources/images/MapsGoogle.png");
 
     const icon = document.createElement('img')
     icon.src = iconLink
