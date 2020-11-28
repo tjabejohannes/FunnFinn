@@ -1,32 +1,27 @@
-let priceTo = getPriceTo();
-let priceFrom = getPriceFrom();
+let priceFields = getPriceFields();
 
-const findPriceField = setInterval(function () {
-    if (!priceTo || !priceFrom) {
-        priceTo = getPriceTo();
-        priceFrom = getPriceFrom();
+const findPriceFields = setInterval(function () {
+    if (!priceFields.priceTo || !priceFields.priceFrom) {
+        priceFields = getPriceFields();
     } else {
-        clearInterval(findPriceField);
-        priceTo.addEventListener("input", function () {
-            this.value = getThousandSeparated(this.value);
-        });
-        priceFrom.addEventListener("input", function () {
-            this.value = getThousandSeparated(this.value);
-        });
+        clearInterval(findPriceFields);
+        Object.keys(priceFields).map(function(key, index) {
+            priceFields[key].addEventListener("input", function () {
+                this.value = getThousandSeparated(this.value);
+            });
+        })
     }
 }, 1000)
 
 setTimeout(function () {
-    clearInterval(findPriceField); // Om den ikke finner feltet innen 9 sek, bare drit i det
+    clearInterval(findPriceFields); // Om den ikke finner feltet innen 9 sek, bare drit i det
 }, 9000);
 
-
-function getPriceTo() {
-    return document.getElementsByName("PRICE_TO")[0];
-}
-
-function getPriceFrom() {
-    return document.getElementsByName("PRICE_FROM")[0];
+function getPriceFields() {
+    return {
+        priceTo: document.getElementsByName("PRICE_TO")[0],
+        priceFrom: document.getElementsByName("PRICE_FROM")[0]
+    }
 }
 
 function getThousandSeparated(value) {
