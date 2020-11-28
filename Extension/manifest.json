@@ -35,6 +35,14 @@
             "js": [
                 "content_scripts/pricePrArea.js"
             ]
+        },
+        {
+            "matches": [
+                "*://kart.finn.no/*"
+            ],
+            "js": [
+                "content_scripts/mapPage.js"
+            ]
         }
     ]
 }
