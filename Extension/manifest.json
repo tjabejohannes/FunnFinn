@@ -1,8 +1,8 @@
 {
     "manifest_version": 2,
     "name": "FunnFinn",
-    "version": "1.1.2",
-    "description": "Denne utvidelsen legger til en ny knapp på alle Finn-annonser som åpner Google Maps sentrert på adressen i annonsen.",
+    "version": "1.1.3",
+    "description": "Denne utvidelsen forbedrer brukeropplevelsen på Finn.",
     "homepage_url": "https://github.com/tjabejohannes/FunnFinn",
     "icons": {
         "48": "icons/funnfinn.png"
