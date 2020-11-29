@@ -4,10 +4,10 @@ const browser = chrome || browser
 addpricePrAreaScript();
 
 function addpricePrAreaScript() {
-  var s = document.createElement('script');
-  s.src = browser.runtime.getURL('web_accessible_resources/scripts/addPricePrArea.js');
-  s.onload = function() {
+  const script = document.createElement('script');
+  script.src = browser.runtime.getURL('web_accessible_resources/scripts/addPricePrArea.js');
+  script.onload = function() {
       this.remove();
   };
-  (document.head || document.documentElement).appendChild(s);
+  (document.head || document.documentElement).appendChild(script);
 }
